@@ -1,0 +1,48 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  okta_amazon-connect_connector
+
+  Sample SAM Template for okta_amazon-connect_connector
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  ConnectUserSyncFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: connector/
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Policies:
+        - AmazonConnect_FullAccess # Give Lambda permission to create users in Amazon Connect
+      Architectures:
+        - x86_64
+      Events:
+        Verification:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /create_user
+            Method: get
+        CreateUser:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /create_user
+            Method: post
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  CreateUserApi:
+    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/create_user/"
+  ConnectUserSyncFunction:
+    Description: "OKTA user sync to Amazon Connect Lambda Function ARN"
+    Value: !GetAtt ConnectUserSyncFunction.Arn
+  ConnectUserSyncFunctionIamRole:
+    Description: "Implicit IAM Role created for ConnectUserSyncfunction"
+    Value: !GetAtt ConnectUserSyncFunctionRole.Arn
