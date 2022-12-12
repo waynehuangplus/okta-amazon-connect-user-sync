@@ -1,6 +1,7 @@
 import json
 import boto3
 import configparser
+from botocore.exceptions import ClientError
 
 print('Loading function')
 
@@ -113,6 +114,6 @@ def _create_amazon_connect_user(users, security_profile_ids, routing_profile_id,
                 InstanceId=instance_id
             )
             print(f"Create UserId {response['UserId']} and UserArn {response['UserArn']}")
-        except Exception as e:
+        except ClientError as e:
             print(e)
-            print(f"Create UserId {response['UserId']} and UserArn {response['UserArn']} Failed.")
+            print(f"Create UserId {alternative_id} Failed.")
