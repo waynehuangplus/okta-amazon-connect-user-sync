@@ -1,4 +1,4 @@
-# okta-aws-connect-connector
+**# okta-aws-connect-connector
 ## Introduction
 Amazon Connect is a cloud-based contact center solution that provides businesses with a set of tools to interact with your customers. Amazon Connect supports SAML 2.0-based authentication to  simplify the process of managing user access to applications and resources, and the employees don't need to remember multiple usernames and passwords, making it easier for them to access the resources they need. Okta is a popular identity and access management solution that many customers may choose inside their organizations and use it to integrate with Amazon Connect. AWS has blog and workshop to guide you how to setup your Amazon Connect instance with OKTA step by step.
 
@@ -11,15 +11,17 @@ This sample use SAM to deploy Amazon API Gateway and AWS Lambda to retrieve the 
 
 ## Setup
 * [Configure Single Sign-On for Amazon Connect Using Okta](https://aws.amazon.com/blogs/contact-center/configure-single-sign-on-for-amazon-connect-using-okta/)
-* Change the **config.ini** and deploy this stack
+* Clone this code and change the **config.ini**
+* Deploy this stack by `sam deploy --guided`
 * Setup [Okta event hooks](https://help.okta.com/en-us/Content/Topics/automation-hooks/event-hooks-main.htm)
 * Subscribe specific [Okta events](https://developer.okta.com/docs/reference/api/event-types/)
   * **application.user_membership.add**
   * **group.user_membership.add**
-* Use the API Gateway endpoint to pass one-time Okta event hooks verification
+* Use the API Gateway endpoint to pass [One-Time Okta Verification Request](https://developer.okta.com/docs/concepts/event-hooks/#one-time-verification-request)
 * You can start to add agents into your Okta Amazon Connect App and sync the user to Amazon Connect
+* **MUST TO DO: You need to leverage your current API authentication mechanism to protect your API endpoint**
 
-## Configs
+## Configurations
 Change configs in the **config.ini** to fit your Amazon Connect and Okta settings
 
 ```[OKTA]
@@ -32,4 +34,4 @@ GROUP_MEMBERSHIP_ADD_EVENT = group.user_membership.add # Add user to group membe
 SECURITY_PROFILE_IDS = 12345678-1234-2345-abd8-0aa7f5b46852, 65345678-1234-2345-abd8-0aa7f5b46852, 98345678-1234-2345-abd8-0aa7f5b46852 # Bind security profile the provisioning agents
 ROUTING_PROFILE_ID = 87654321-69fb-43b6-a5e6-f8666ac189cb # Bind routing profile to provisioning agents
 INSTANCE_ID = abcdefgh-0122-4131-adc2-a0ebe5a2b2a7 # Your Amazon Connect Instance ID
-```
+```**
