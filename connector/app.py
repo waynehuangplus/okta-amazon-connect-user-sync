@@ -25,6 +25,7 @@ def lambda_handler(event, context):
     # For One-Time Verification Request
     # https://developer.okta.com/docs/concepts/event-hooks/#one-time-verification-request
     if event['httpMethod'] == "GET":
+        print("One-Time Okta Verification Request")
         return _okta_one_time_verification_handler(event)
 
     # Parse okta add user event
