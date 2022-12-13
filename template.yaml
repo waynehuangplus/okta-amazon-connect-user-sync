@@ -1,9 +1,9 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  okta_amazon-connect_connector
-
-  Sample SAM Template for okta_amazon-connect_connector
+  This SAM template will deploy a Lambda with a IAM role which has permissions to call Amazon Connect and a API Gateway to create a endpoint to retrieve Okta event hooks.
+  
+  The sample code contains the code to do Okta one time event hooks verification and help to provision user from Okta to Amazon Connect.
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
@@ -38,7 +38,7 @@ Outputs:
   # Find out more about other implicit resources you can reference within SAM
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
   CreateUserApi:
-    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+    Description: "API Gateway endpoint URL for Prod stage for ConnectUserSync function"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/create_user/"
   ConnectUserSyncFunction:
     Description: "OKTA user sync to Amazon Connect Lambda Function ARN"
