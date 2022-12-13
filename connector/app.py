@@ -44,10 +44,7 @@ def lambda_handler(event, context):
         "statusCode": 200,
         "headers": {
             "Content-Type": "application/json"
-        },
-        "body": json.dumps({
-            "Region ": "json_region"
-        })
+        }
     }
 
 
@@ -103,8 +100,8 @@ def _create_amazon_connect_user(users, security_profile_ids, routing_profile_id,
             response = client.create_user(
                 Username=alternative_id,
                 IdentityInfo={
-                    'FirstName': 'string',
-                    'LastName': 'string'
+                    'FirstName': 'Hello',
+                    'LastName': 'World'
                 },
                 PhoneConfig={
                     'PhoneType': 'SOFT_PHONE'
