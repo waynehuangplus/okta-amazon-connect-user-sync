@@ -7,14 +7,17 @@ However, currently it doesn't support automatic user provisioning from Okta to A
 ## Implementation
 To sync the users created in Okta, we need to leverage [Okta Event hooks](https://help.okta.com/en-us/Content/Topics/automation-hooks/event-hooks-main.htm) to automatically provision users to Amazon Connect with mapping routing profile and security profiles to give the proper permissions to your agents.
 
-This sample use Amazon API Gateway and AWS Lambda to retrieve the event hooks from Okta and implements the [initial event hook verification](initial event hook verification) when the first time you setup event hook on your Okta org and the logic to create the users on Amazon Connect.
+This sample use SAM to deploy Amazon API Gateway and AWS Lambda to retrieve the event hooks from Okta and implements the [initial event hook verification](initial event hook verification) when the first time you setup event hook on your Okta org and the logic to create the users on Amazon Connect.
 
-## Prerequisite
+## Setup
 * [Configure Single Sign-On for Amazon Connect Using Okta](https://aws.amazon.com/blogs/contact-center/configure-single-sign-on-for-amazon-connect-using-okta/)
+* Change the **config.ini** and deploy this stack
 * Setup [Okta event hooks](https://help.okta.com/en-us/Content/Topics/automation-hooks/event-hooks-main.htm)
 * Subscribe specific [Okta events](https://developer.okta.com/docs/reference/api/event-types/)
   * **application.user_membership.add**
   * **group.user_membership.add**
+* Use the API Gateway endpoint to pass one-time Okta event hooks verification
+* You can start to add agents into your Okta Amazon Connect App and sync the user to Amazon Connect
 
 ## Configs
 Change configs in the **config.ini** to fit your Amazon Connect and Okta settings
